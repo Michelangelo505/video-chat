@@ -4,13 +4,10 @@ const myPeer = new Peer({
   host:'peerjs-server.herokuapp.com',
   secure:true,
   port:443,
-  config: {
-      iceServers: [
-        {
-          urls: "stun:stun.l.google.com:19302",
-          url: "stun:stun.l.google.com:19302"
-        }]
-      }
+  config: {'iceServers': [
+    { url: 'stun:stun.l.google.com:19302' },
+    { url: 'turn:homeo@turn.bistri.com:80', credential: 'homeo' }
+  ]}
 })
 
 
