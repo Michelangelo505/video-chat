@@ -3,6 +3,7 @@ const app = express()
 const server = require('http').Server(app)
 const io = require('socket.io')(server)
 const {v4: uuidv4} = require('uuid')
+const port = process.env.PORT || 3000;
 app.set('view engine', 'ejs')
 app.use(express.static('public'))
 
@@ -15,10 +16,14 @@ app.get('/:room', (req, res) => {
 })
 
 io.on('connection', socket =>{
-  socket.on('join-room', (roomId, userId) =>{
+  socket.on('join-room', (roomId, userId, userName) =>{
     console.log(roomId, userId)
     socket.join(roomId)
-    socket.to(roomId).emit('user-connected', userId)
+    socket.to(roomId).emit('user-connected', userId, userName)
+
+  socket.on('create-channel', (userId, userName)=>{
+    socket.to(roomId).emit('channel-connect', userId)
+  })
 
     socket.on('disconnect', () =>{
       socket.to(roomId).emit('user-disconnected', userId)
@@ -27,4 +32,4 @@ io.on('connection', socket =>{
   })
 })
 
-server.listen(3000)
+server.listen(port)
