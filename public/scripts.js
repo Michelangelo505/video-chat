@@ -3,7 +3,11 @@ const socket = io('/')
 const myPeer = new Peer({
   host:'peerjs-server.herokuapp.com',
   secure:true,
-  port:443
+  port:443,
+  config:{
+    'iceServers' : [{url : 'stun:stun.l.google.com:19302' }]
+  }
+
 })
 
 
