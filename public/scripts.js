@@ -9,11 +9,8 @@ const myPeer = new Peer({
         {
           urls: "stun:stun.l.google.com:19302",
           url: "stun:stun.l.google.com:19302"
-        }
-<<<<<<< HEAD
+        }]
       }
-=======
->>>>>>> d1277a48e25b415b66e041c2997cd4c69e0e8cbd
 })
 
 
