@@ -9,17 +9,7 @@ const myPeer = new Peer({
         {
           urls: "stun:stun.l.google.com:19302",
           url: "stun:stun.l.google.com:19302"
-        },
-        {
-          urls: "[...]",
-          url: "[..]",
-          credential: "***",
-          username: "***"
         }
-      ],
-      sdpSemantics: "unified-plan"
-    }
-
 })
 
 
