@@ -4,9 +4,21 @@ const myPeer = new Peer({
   host:'peerjs-server.herokuapp.com',
   secure:true,
   port:443,
-  config:{
-    'iceServers' : [{url : 'stun:stun.l.google.com:19302' }]
-  }
+  config: {
+      iceServers: [
+        {
+          urls: "stun:stun.l.google.com:19302",
+          url: "stun:stun.l.google.com:19302"
+        },
+        {
+          urls: "[...]",
+          url: "[..]",
+          credential: "***",
+          username: "***"
+        }
+      ],
+      sdpSemantics: "unified-plan"
+    }
 
 })
 
@@ -234,6 +246,7 @@ function connectToNewUser(userId, stream, userName){
 
   call.on('stream', userVideoStream => {
     addVideoStream(video,userVideoStream, userId, userName)
+    console.log(userVideoStream);
   })
 
   call.on('close', ()=>{
