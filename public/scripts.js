@@ -13,6 +13,7 @@ const myPeer = new Peer({
 const peers = {}
 const names = {}
 var channelConnect;
+const bandwidth = prompt("Введите битрейт");
 const videoGrid = document.getElementById('video-grid')
 const myVideo = document.createElement('video')
 const showChat = document.querySelector("#showChat");
@@ -140,7 +141,11 @@ navigator.mediaDevices.getUserMedia({
   addVideoStream(myVideo, stream, null, user)
 
   myPeer.on('call', call=>{
-    call.answer(stream)
+    call.answer(stream, {sdpTransform:(sdp)=>{
+      new_sdp = modifySDP(sdp)
+      console.log(sdp);
+      return new_sdp;
+  }})
     userId = call.peer
     const video = document.createElement('video')
     call.on('stream', userVideoStream  => {
@@ -228,7 +233,11 @@ function addVideoStream(video, stream, userId, userName){
 }
 
 function connectToNewUser(userId, stream, userName){
-  const call = myPeer.call(userId, stream)
+  const call = myPeer.call(userId, stream, {sdpTransform:(sdp)=>{
+    new_sdp = modifySDP(sdp)
+    // console.log(new_sdp);
+    return new_sdp;
+  }})
   const video = document.createElement('video')
 
   call.on('stream', userVideoStream => {
@@ -243,4 +252,11 @@ function connectToNewUser(userId, stream, userName){
   peers[userId] = call
 
   console.log(peers)
+}
+
+function modifySDP(sdp){
+  var buff_sdp;
+  buff_sdp = sdp + `b=AS:${bandwidth}\r\n`
+  return buff_sdp
+
 }

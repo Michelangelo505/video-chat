@@ -2,6 +2,7 @@ const express = require('express')
 const app = express()
 const server = require('http').Server(app)
 const io = require('socket.io')(server)
+const sdpTransform = require('sdp-transform');
 const {v4: uuidv4} = require('uuid')
 const port = process.env.PORT || 3000;
 app.set('view engine', 'ejs')
@@ -30,6 +31,22 @@ io.on('connection', socket =>{
     })
 
   })
+  // socket.on('change-sdp', (sdp)=>{
+  //   // change_sdp = sdp + 'b=AS:8\r\n'
+  //   res = sdpTransform.parse(sdp);
+  //   // res.media[1].maxBitrate = 8
+  //   res.media[1].bandwidth = [{ type: 'AS', limit: 8 }];
+  //   new_sdp = sdpTransform.write(res);
+  //   str_sdp = new_sdp.toString()
+  //   console.log(str_sdp);
+  //   // console.log(res.media[1].rtp.forEach((item, i, arr) => {
+  //   //   console.log(item.rate)
+  //   //   })
+  //   // )
+  //   socket.emit('get-sdp', str_sdp)
+  // })
 })
+
+
 
 server.listen(port)
