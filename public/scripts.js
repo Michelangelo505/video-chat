@@ -143,7 +143,7 @@ navigator.mediaDevices.getUserMedia({
   myPeer.on('call', call=>{
     call.answer(stream, {sdpTransform:(sdp)=>{
       new_sdp = modifySDP(sdp)
-      console.log(sdp);
+      console.log(new_sdp);
       return new_sdp;
   }})
     userId = call.peer
